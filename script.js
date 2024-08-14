@@ -1,23 +1,30 @@
-function volume_sphere(event) {
-  // Get the radius value from the input field
-  const radiusInput = document.getElementById("radius");
-  const radius = parseFloat(radiusInput.value);
+function volume_sphere(e) {
+  //Write your code here
+  e.preventDefault(); // Prevent form submission and page reload
 
-  // Validate the input
+  // Retrieve the radius value entered by the user
+  var radiusInput = document.getElementById("radius").value.trim();
+
+  // Validate the input: Check if the input is a non-negative number
+  var radius = parseFloat(radiusInput); // Convert input to a float number
+
   if (isNaN(radius) || radius < 0) {
+    // Display 'NaN' in the volume field for invalid input
     document.getElementById("volume").value = "NaN";
-    return;
+  } else {
+    // Calculate the volume of the sphere
+    var volume = (4 / 3) * Math.PI * Math.pow(radius, 3);
+
+    // Round the volume to four decimal places
+    volume = volume.toFixed(4);
+
+    // Display the calculated volume in the volume field
+    document.getElementById("volume").value = volume;
   }
-
-  // Calculate the volume of the sphere
-  const volume = (4 / 3) * Math.PI * Math.pow(radius, 3);
-
-  // Round the volume to four decimal places
-  const roundedVolume = volume.toFixed(4);
-
-  // Display the calculated volume in the output field
-  document.getElementById("volume").value = roundedVolume;
 }
-
-
-window.onload = document.getElementById('MyForm').onsubmit = volume_sphere;
+window.onload = function () {
+  document.getElementById("MyForm").onsubmit = function (e) {
+    volume_sphere(e); // Call the volume_sphere function to calculate and display the volume
+  };
+};
+// window.onload = document.getElementById('MyForm').onsubmit = volume_sphere;
